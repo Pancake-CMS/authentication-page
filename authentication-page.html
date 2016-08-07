@@ -1,0 +1,99 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../authenticate-button/authenticate-button.html">
+<link rel="import" href="../local-configurator/local-configurator.html">
+<link rel="import" href="../iron-localstorage/iron-localstorage.html">
+<link rel="import" href="../polymerfire/firebase-app.html">
+
+<dom-module id="authentication-page">
+  <template>
+    <style>
+      :host{
+        @apply(--layout-horizontal);
+        @apply(--layout-fullbleed);
+        font-family: 'Roboto Condensed', sans-serif;
+        background: #edfdf9;
+      }
+      .left {
+        padding: 50px;
+        text-align: center;
+        @apply(--layout-flex-8);
+        @apply(--layout-vertical);
+      }
+      .right{
+        padding: 50px;
+        border-left: 2px solid #ebebeb;
+        @apply(--layout-flex-4);
+      }
+
+      h3 {
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: normal;
+        font-size: 25px;
+      }
+      .left-buttons{
+        @apply(--layout-flex);
+        @apply(--layout-center);
+      }
+    </style>
+    <div class="left">
+      <h3>Login</h3>
+      <div class="left-buttons">
+        <authenticate-button mode="github" disabled$="[[!hasConfig]]"></authenticate-button>
+        <authenticate-button mode="google" disabled$="[[!hasConfig]]"></authenticate-button>
+      </div>
+      <template is="dom-if" if="[[!hasConfig]]">
+        <p>The login buttons have been disables because there is no configuration set for your project.</p>
+      </template>
+    </div>
+    <div class="right">
+      <h3>Pancake Configuration</h3>
+      <local-configurator on-local-configurator-changed="handleConfigChange"></local-configurator>
+    </div>
+
+    <template is="dom-if" if="[[hasConfig]]">
+      <firebase-app
+          auth-domain="[[config.authDomain]]"
+          database-url="[[config.databaseUrl]]"
+          api-key="[[config.firebaseApiKey]]">
+      </firebase-app>
+    </template>
+  </template>
+  <script>
+    Polymer({
+      is: 'authentication-page',
+
+      properties: {
+        config:  {
+          type: Object,
+          notify: true
+        },
+
+        hasConfig: {
+          type: Boolean,
+          notify: true,
+          value: false
+        }
+      },
+
+      ready: function() {
+        this.$$('local-configurator').parseConfig();
+      },
+      /*
+       * Gets triggered when the config is not set
+       */
+      handleNoConfig: function() {
+        this.hasConfig = false;
+      },
+
+      handleConfigChange: function(e, detail) {
+        if(!!detail.config) {
+          this.config = detail.config;
+          this.hasConfig = true;
+          return;
+        }
+        this.hasConfig = false;
+      }
+    });
+  </script>
+</dom-module>

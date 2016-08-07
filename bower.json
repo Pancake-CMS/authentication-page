@@ -1,0 +1,24 @@
+{
+  "name": "authentication-page",
+  "homepage": "https://github.com/Pancake-CMS/authentication-page",
+  "authors": [
+    "Prateek Jadhwani <prateekjadhwani@users.noreply.github.com>"
+  ],
+  "description": "A polymer element to display authentication information to the user",
+  "main": "authentication-page.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "^1.6.1",
+    "authenticate-button": "pancake-cms-authenticate-button#*",
+    "local-configurator": "pancake-cms-local-configurator#*",
+    "iron-localstorage": "PolymerElements/iron-localstorage#^1.0.6",
+    "polymerfire": "firebase/polymerfire#^0.9.4"
+  }
+}
