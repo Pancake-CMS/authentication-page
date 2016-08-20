@@ -1,7 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../authenticate-button/authenticate-button.html">
-<link rel="import" href="../local-configurator/local-configurator.html">
-<link rel="import" href="../iron-localstorage/iron-localstorage.html">
 <link rel="import" href="../polymerfire/firebase-app.html">
 
 <dom-module id="authentication-page">
@@ -36,28 +34,22 @@
         @apply(--layout-center);
       }
     </style>
+    <firebase-app
+        auth-domain="__YOUR_AUTH_DOMAIN__"
+        database-url="__YOUR_DATABASE_URL__"
+        api-key="__YOUR_API_KEY__">
+    </firebase-app>
     <div class="left">
       <h3>Login</h3>
       <div class="left-buttons">
-        <authenticate-button mode="github" disabled$="[[!hasConfig]]"></authenticate-button>
-        <authenticate-button mode="google" disabled$="[[!hasConfig]]"></authenticate-button>
+        <authenticate-button mode="github" on-login-success="handleLoginSuccess"></authenticate-button>
+        <authenticate-button mode="google"></authenticate-button>
       </div>
-      <template is="dom-if" if="[[!hasConfig]]">
-        <p>The login buttons have been disables because there is no configuration set for your project.</p>
-      </template>
     </div>
     <div class="right">
-      <h3>Pancake Configuration</h3>
-      <local-configurator on-local-configurator-changed="handleConfigChange"></local-configurator>
+      <h3>Pancake Project</h3>
+      <p>If you are not able to login, please ask your administrator to add you into the system</p>
     </div>
-
-    <template is="dom-if" if="[[hasConfig]]">
-      <firebase-app
-          auth-domain="[[config.authDomain]]"
-          database-url="[[config.databaseUrl]]"
-          api-key="[[config.firebaseApiKey]]">
-      </firebase-app>
-    </template>
   </template>
   <script>
     Polymer({
@@ -76,23 +68,13 @@
         }
       },
 
-      ready: function() {
-        this.$$('local-configurator').parseConfig();
-      },
       /*
-       * Gets triggered when the config is not set
+       * Handles successfull login
        */
-      handleNoConfig: function() {
-        this.hasConfig = false;
-      },
-
-      handleConfigChange: function(e, detail) {
-        if(!!detail.config) {
-          this.config = detail.config;
-          this.hasConfig = true;
-          return;
-        }
-        this.hasConfig = false;
+      handleLoginSuccess: function(e, detail) {
+        this.fire('authentication-success',{
+          user: detail.user
+        });
       }
     });
   </script>
