@@ -1,15 +1,17 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../authenticate-button/authenticate-button.html">
-<link rel="import" href="../polymerfire/firebase-app.html">
 
 <dom-module id="authentication-page">
   <template>
     <style>
       :host{
-        @apply(--layout-horizontal);
         @apply(--layout-fullbleed);
         font-family: 'Roboto Condensed', sans-serif;
         background: #edfdf9;
+        display: none;
+      }
+      :host([active]){
+        @apply(--layout-horizontal);
       }
       .left {
         padding: 50px;
@@ -34,11 +36,6 @@
         @apply(--layout-center);
       }
     </style>
-    <firebase-app
-        auth-domain="__YOUR_AUTH_DOMAIN__"
-        database-url="__YOUR_DATABASE_URL__"
-        api-key="__YOUR_API_KEY__">
-    </firebase-app>
     <div class="left">
       <h3>Login</h3>
       <div class="left-buttons">
