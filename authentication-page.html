@@ -69,9 +69,7 @@
        * Handles successfull login
        */
       handleLoginSuccess: function(e, detail) {
-        this.fire('authentication-success',{
-          user: detail.user
-        });
+        this.set('route.path', '/components');
       }
     });
   </script>
