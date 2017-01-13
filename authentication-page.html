@@ -39,8 +39,9 @@
     <div class="left">
       <h3>Login</h3>
       <div class="left-buttons">
-        <authenticate-button mode="github" on-login-success="handleLoginSuccess"></authenticate-button>
-        <authenticate-button mode="google"></authenticate-button>
+        <authenticate-button mode="github" on-login-success="_handleLoginSuccess"></authenticate-button>
+        <authenticate-button mode="google" on-login-success="_handleLoginSuccess"></authenticate-button>
+        <authenticate-with-email on-login-success="_handleLoginSuccess"></authenticate-with-email>
       </div>
     </div>
     <div class="right">
@@ -68,7 +69,7 @@
       /*
        * Handles successfull login
        */
-      handleLoginSuccess: function(e, detail) {
+      _handleLoginSuccess: function(e, detail) {
         this.set('route.path', '/components');
       }
     });

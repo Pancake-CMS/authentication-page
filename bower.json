@@ -19,6 +19,6 @@
     "authenticate-button": "pancake-cms-authenticate-button#*",
     "local-configurator": "pancake-cms-local-configurator#*",
     "iron-localstorage": "PolymerElements/iron-localstorage#^1.0.6",
-    "polymerfire": "firebase/polymerfire#^0.9.4"
+    "authenticate-with-email": "pancake-cms-authenticate-with-email#*"
   }
 }
