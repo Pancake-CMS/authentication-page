@@ -7,11 +7,11 @@
     <style>
       :host{
         @apply(--layout-fullbleed);
-        font-family: 'Roboto Condensed', sans-serif;
         background: #edfdf9;
         display: none;
       }
       :host([active]){
+        font-family: 'Roboto Condensed', sans-serif;
         @apply(--layout-horizontal);
       }
       .left {
@@ -36,13 +36,27 @@
         @apply(--layout-flex);
         @apply(--layout-center);
       }
+      .wrapper-for-email {
+        width: 300px;
+        margin: 20px auto;
+      }
+      .wrapper-for-email > h5 {
+        margin: 50px 0 0 0;
+      }
+      authenticate-with-email {
+        text-align: left;
+        display: block;
+      }
     </style>
     <div class="left">
       <h3>Login</h3>
       <div class="left-buttons">
         <authenticate-button mode="github" on-login-success="_handleLoginSuccess"></authenticate-button>
         <authenticate-button mode="google" on-login-success="_handleLoginSuccess"></authenticate-button>
-        <authenticate-with-email on-login-success="_handleLoginSuccess"></authenticate-with-email>
+        <div class="wrapper-for-email">
+          <h5>Or Login with your Username and Password</h5>
+          <authenticate-with-email on-login-success="_handleLoginSuccess"></authenticate-with-email>
+        </div>
       </div>
     </div>
     <div class="right">
